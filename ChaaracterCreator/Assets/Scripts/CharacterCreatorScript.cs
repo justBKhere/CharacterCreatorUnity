@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class CharacterCreatorScript : MonoBehaviour
 {
     public DynamicCharacterAvatar dynamicCharacterAvatarScript;
+    public CameraController cameraControllerScript;
     public Dictionary<string, DnaSetter> dNAmodule;
     
     
@@ -15,6 +16,7 @@ public class CharacterCreatorScript : MonoBehaviour
 
     public string maleRaceName;
     public string femaleRaceName;
+    public bool genderMale;
 
     [Space(10)]
 
@@ -26,12 +28,42 @@ public class CharacterCreatorScript : MonoBehaviour
     public int dNAModuleValue;
     [Space(10)]
 
-    [Header("Color module related data")]
-    
-    public List<string> ColorModuleStrings;
+    [Header("Guise module related data")]
 
-    public int ColorChangerValue;
+    public List<string> GuiseModuleStringsMale;
+    public List<string> hairModuleMale;
+    public List<string> beardModuleMale;
+    public List<string> eyesModuleMale;
+    public List<string> eyeBrowsModuleMale;
+    public List<string> chestModuleMale;
+    public List<string> legsModuleMale;
+    public List<string> feetModuleMale;
+
+    [Space(20)]
+
+    public List<string> GuiseModuleStringsFemale;
+    public List<string> hairModuleFemale;
+    public List<string> chestModuleFemale;
+    public List<string> legsModuleFemale;
+    public List<string> feetModuleFemale;
+    public List<string> UnderwearModuleFemale;
+
+
+    public int guiseModuleValue;
+    public int guiseSubModuleValue;
+
+    public Text guiseModuleText;
+    public Text guiseSubModuleText;
+
     [Space(10)]
+
+    [Header("Color module related data")]
+
+    public List<string> ColorModuleStrings;
+    public int ColorModuleValue;
+    public Text colorModuleText;
+    [Space(10)]
+
 
 
     #region recipies
@@ -48,11 +80,15 @@ public class CharacterCreatorScript : MonoBehaviour
         {
             dynamicCharacterAvatarScript.ChangeRace(maleRaceName);
             dynamicCharacterAvatarScript.BuildCharacter();
+            genderMale = true;
+            cameraControllerScript.genderMale = true;
         }
         else if(!genderState && dynamicCharacterAvatarScript.activeRace.name!=femaleRaceName)
         {
             dynamicCharacterAvatarScript.ChangeRace(femaleRaceName);
             dynamicCharacterAvatarScript.BuildCharacter();
+            genderMale = false;
+            cameraControllerScript.genderMale = false;
         }
     }
 
@@ -134,26 +170,771 @@ public class CharacterCreatorScript : MonoBehaviour
 
     #region Colors Module
 
-    
-
-    public void SkinColorChanged()
+    public void ColorItemIncrement()
     {
-        ColorChangerValue = 0;
+        if(ColorModuleValue < ColorModuleStrings.Count-1)
+        {
+            ColorModuleValue++;
+            colorModuleText.text = ColorModuleStrings[ColorModuleValue];
+            if (ColorModuleValue == 1 || ColorModuleValue == 2)
+            {
+                cameraControllerScript.FocusFaceView();
+            }
+            else
+            {
+                cameraControllerScript.FocusFullbodyView();
+            }
+        }
+        
+        else
+        {
+            ColorModuleValue = 0;
+            colorModuleText.text = ColorModuleStrings[ColorModuleValue];
+            if (ColorModuleValue == 1 || ColorModuleValue == 2)
+            {
+                cameraControllerScript.FocusFaceView();
+            }
+            else
+            {
+                cameraControllerScript.FocusFullbodyView();
+            }
+        }
     }
+
+    public void ColorItemDecrement()
+    {
+        if (ColorModuleValue > 0)
+        {
+            ColorModuleValue--;
+            colorModuleText.text = ColorModuleStrings[ColorModuleValue];
+            if(ColorModuleValue == 1 || ColorModuleValue == 2)
+            {
+                cameraControllerScript.FocusFaceView();
+            }
+            else
+            {
+                cameraControllerScript.FocusFullbodyView();
+            }
+        }
+        else
+        {
+            ColorModuleValue = ColorModuleStrings.Count - 1;
+            colorModuleText.text = ColorModuleStrings[ColorModuleValue];
+            if (ColorModuleValue == 1 || ColorModuleValue == 2)
+            {
+                cameraControllerScript.FocusFaceView();
+            }
+            else
+            {
+                cameraControllerScript.FocusFullbodyView();
+            }
+        }
+    }
+
+
 
     public void ColorModuleAdjustments(Color col)
     {
-        switch (ColorChangerValue)
-        {
-            case 0:
-                Debug.Log("Changing Colors");
-                dynamicCharacterAvatarScript.SetColor(ColorModuleStrings[ColorChangerValue], col);
-                dynamicCharacterAvatarScript.UpdateColors(true);
-
-                break;
-
-        }
+        Debug.Log("Changing Colors");
+        
+        dynamicCharacterAvatarScript.SetColor(ColorModuleStrings[ColorModuleValue], col);
+        dynamicCharacterAvatarScript.UpdateColors(true);
     }
     #endregion
 
+    #region GuiseModule
+    
+
+    private void UpdateguiseModuleMale()
+    {
+        guiseSubModuleText.text = "None";
+        guiseSubModuleValue = 0;
+
+        guiseModuleText.text = GuiseModuleStringsMale[guiseModuleValue];
+        if (guiseModuleValue < 4)
+        {
+            cameraControllerScript.FocusFaceView();
+        }
+        else
+        {
+            cameraControllerScript.FocusFullbodyView();
+        }
+    }
+
+    private void UpdateguiseModuleFemale()
+    {
+        guiseSubModuleText.text = "None";
+        guiseSubModuleValue = 0;
+
+        guiseModuleText.text = GuiseModuleStringsFemale[guiseModuleValue];
+        if (guiseModuleValue < 1)
+        {
+            cameraControllerScript.FocusFaceView();
+        }
+        else
+        {
+            cameraControllerScript.FocusFullbodyView();
+        }
+    }
+
+    public void GuiseModuleIncrement()
+    {
+        if(genderMale)
+        {
+            if (guiseModuleValue < GuiseModuleStringsMale.Count - 1)
+            {
+                guiseModuleValue++;
+                UpdateguiseModuleMale();
+            }
+
+            else
+            {
+                guiseModuleValue = 0;
+                UpdateguiseModuleMale();
+            }
+        }
+        else
+        {
+            if (guiseModuleValue < GuiseModuleStringsFemale.Count - 1)
+            {
+                guiseModuleValue++;
+                UpdateguiseModuleFemale();
+            }
+
+            else
+            {
+                guiseModuleValue = 0;
+                UpdateguiseModuleFemale();
+            }
+        }
+    }
+
+    public void GuiseModuleDecrement()
+    {
+        if(genderMale)
+        {
+            if (guiseModuleValue > 0)
+            {
+                guiseModuleValue--;
+                UpdateguiseModuleMale();
+            }
+            else
+            {
+                guiseModuleValue = GuiseModuleStringsMale.Count - 1;
+                UpdateguiseModuleMale();
+            }
+        }
+        else
+        {
+            if (guiseModuleValue > 0)
+            {
+                guiseModuleValue--;
+                UpdateguiseModuleFemale();
+            }
+            else
+            {
+                guiseModuleValue = GuiseModuleStringsFemale.Count - 1;
+                UpdateguiseModuleFemale();
+            }
+        }
+    }
+
+    #region Male Guise SubModules
+    public void UpdateHairModuleMale()
+    {
+        if(guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], hairModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = hairModuleMale[guiseSubModuleValue];
+       
+    }
+
+    public void UpdateBeardModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], beardModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = beardModuleMale[guiseSubModuleValue];
+        
+    }
+
+    public void UpdateEyesModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], eyesModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = eyesModuleMale[guiseSubModuleValue];
+        
+    }
+
+    public void UpdateEyeBrowsModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], eyeBrowsModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = eyeBrowsModuleMale[guiseSubModuleValue];
+        
+    }
+
+    public void UpdateChestModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], chestModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = chestModuleMale[guiseSubModuleValue];
+        
+    }
+
+    public void UpdateLegsModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], legsModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = legsModuleMale[guiseSubModuleValue];
+       
+    }
+
+    public void UpdateFeetModuleMale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsMale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsMale[guiseModuleValue], feetModuleMale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = feetModuleMale[guiseSubModuleValue];
+       
+    }
+    #endregion
+
+    #region Female Guise SubModules
+    public void UpdateHairModuleFemale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsFemale[guiseModuleValue], hairModuleFemale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = hairModuleFemale[guiseSubModuleValue];
+
+    }
+
+    public void UpdateChestModuleFemale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsFemale[guiseModuleValue], chestModuleFemale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = chestModuleFemale[guiseSubModuleValue];
+
+    }
+
+    public void UpdateLegsModuleFemale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsFemale[guiseModuleValue], legsModuleFemale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = legsModuleFemale[guiseSubModuleValue];
+
+    }
+
+    public void UpdateFeetModuleFemale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsFemale[guiseModuleValue], feetModuleFemale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = feetModuleFemale[guiseSubModuleValue];
+
+    }
+
+    public void UpdateUnderwearModuleFemale()
+    {
+        if (guiseSubModuleValue == 0)
+        {
+            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        else
+        {
+            dynamicCharacterAvatarScript.SetSlot(GuiseModuleStringsFemale[guiseModuleValue], UnderwearModuleFemale[guiseSubModuleValue]);
+            dynamicCharacterAvatarScript.BuildCharacter();
+        }
+        guiseSubModuleText.text = UnderwearModuleFemale[guiseSubModuleValue];
+
+    }
+    #endregion
+    public void GuiseSubModuleIncrement()
+    {
+        if(genderMale)
+        {
+            switch (guiseModuleValue)
+            {
+
+                case 0:
+                    if (guiseSubModuleValue < hairModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateHairModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateHairModuleMale();
+                    }
+                    break;
+
+                case 1:
+                    if (guiseSubModuleValue < beardModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateBeardModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateBeardModuleMale();
+                    }
+                    break;
+
+                case 2:
+                    if (guiseSubModuleValue < eyesModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateEyesModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateEyesModuleMale();
+                    }
+
+                    break;
+
+                case 3:
+                    if (guiseSubModuleValue < eyeBrowsModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateEyeBrowsModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateEyeBrowsModuleMale();
+                    }
+
+                    break;
+
+                case 4:
+                    if (guiseSubModuleValue < chestModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateChestModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateChestModuleMale();
+                    }
+
+                    break;
+
+                case 5:
+                    if (guiseSubModuleValue < legsModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateLegsModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateLegsModuleMale();
+                    }
+
+                    break;
+
+                case 6:
+                    if (guiseSubModuleValue < feetModuleMale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateFeetModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateFeetModuleMale();
+                    }
+
+                    break;
+            }
+        }
+        else
+        {
+            switch (guiseModuleValue)
+            {
+
+                case 0:
+                    if (guiseSubModuleValue < hairModuleFemale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateHairModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateHairModuleFemale();
+                    }
+                    break;
+
+                case 1:
+                    if (guiseSubModuleValue < chestModuleFemale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateChestModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateChestModuleFemale();
+                    }
+                    break;
+
+                case 2:
+                    if (guiseSubModuleValue < legsModuleFemale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateLegsModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateLegsModuleFemale();
+                    }
+                    break;
+
+                case 3:
+                    if (guiseSubModuleValue < feetModuleFemale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateFeetModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateFeetModuleFemale();
+                    }
+
+                    break;
+
+                case 4:
+                    if (guiseSubModuleValue < UnderwearModuleFemale.Count - 1)
+                    {
+                        guiseSubModuleValue++;
+                        UpdateUnderwearModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = 0;
+                        UpdateUnderwearModuleFemale();
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    public void GuiseSubModuleDecrement()
+    {
+        if(genderMale)
+        {
+            switch (guiseModuleValue)
+            {
+                case 0:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateHairModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = hairModuleMale.Count - 1;
+                        UpdateHairModuleMale();
+                    }
+                    break;
+
+                case 1:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateBeardModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = beardModuleMale.Count - 1;
+                        UpdateBeardModuleMale();
+                    }
+                    break;
+
+                case 2:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateEyesModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = eyesModuleMale.Count - 1;
+                        UpdateEyesModuleMale();
+                    }
+                    break;
+
+                case 3:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateEyeBrowsModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = eyeBrowsModuleMale.Count - 1;
+                        UpdateEyeBrowsModuleMale();
+                    }
+                    break;
+
+                case 4:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateChestModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = chestModuleMale.Count - 1;
+                        UpdateChestModuleMale();
+                    }
+                    break;
+
+                case 5:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateLegsModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = legsModuleMale.Count - 1;
+                        UpdateLegsModuleMale();
+                    }
+                    break;
+
+                case 6:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateFeetModuleMale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = feetModuleMale.Count - 1;
+                        UpdateFeetModuleMale();
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            switch (guiseModuleValue)
+            {
+                case 0:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateHairModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = hairModuleFemale.Count - 1;
+                        UpdateHairModuleFemale();
+                    }
+                    break;
+
+                case 1:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateChestModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = chestModuleFemale.Count - 1;
+                        UpdateChestModuleFemale();
+                    }
+                    break;
+
+                case 2:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateLegsModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = legsModuleFemale.Count - 1;
+                        UpdateLegsModuleFemale();
+                    }
+                    break;
+
+                case 3:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateFeetModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = feetModuleFemale.Count - 1;
+                        UpdateFeetModuleFemale();
+                    }
+                    break;
+
+                case 4:
+                    if (guiseSubModuleValue > 0)
+                    {
+                        guiseSubModuleValue--;
+                        UpdateUnderwearModuleFemale();
+
+                    }
+
+                    else
+                    {
+                        guiseSubModuleValue = chestModuleFemale.Count - 1;
+                        UpdateUnderwearModuleFemale();
+                    }
+                    break;
+
+                
+            }
+        }
+        
+
+    }
+
+
+    #endregion
 }

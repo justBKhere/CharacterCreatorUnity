@@ -11,7 +11,13 @@ public class CameraController : MonoBehaviour
     public GameObject upperBodyView;
     public GameObject lowerBodyView;
 
-    public bool fullBodyBool,headViewBool,faceViewBool,upperBodyBool,lowerBodyBool;
+    public GameObject fullBodyViewF;
+    public GameObject headViewF;
+    public GameObject faceViewF;
+    public GameObject upperBodyViewF;
+    public GameObject lowerBodyViewF;
+
+    public bool fullBodyBool,headViewBool,faceViewBool,upperBodyBool,lowerBodyBool,genderMale;
 
     public Vector3 currentPos;
     public Vector3 newPos;
@@ -88,8 +94,16 @@ public class CameraController : MonoBehaviour
             currentPos = mainCamera.gameObject.transform.position;
             currentRot = mainCamera.gameObject.transform.rotation;
 
-            newPos = fullBodyView.gameObject.transform.position;
-            newRot = fullBodyView.gameObject.transform.rotation;
+            if(genderMale)
+            {
+                newPos = fullBodyView.gameObject.transform.position;
+                newRot = fullBodyView.gameObject.transform.rotation;
+            }
+            else
+            {
+                newPos = fullBodyViewF.gameObject.transform.position;
+                newRot = fullBodyViewF.gameObject.transform.rotation;
+            }
 
             mainCamera.gameObject.transform.position = Vector3.Lerp(currentPos, newPos, runTime/TimetoMove);
             mainCamera.gameObject.transform.rotation = Quaternion.Lerp(currentRot, newRot, runTime/TimetoMove);
@@ -107,9 +121,16 @@ public class CameraController : MonoBehaviour
             currentPos = mainCamera.gameObject.transform.position;
             currentRot = mainCamera.gameObject.transform.rotation;
 
-            newPos = headView.gameObject.transform.position;
-            newRot = headView.gameObject.transform.rotation;
-
+            if (genderMale)
+            {
+                newPos = headView.gameObject.transform.position;
+                newRot = headView.gameObject.transform.rotation;
+            }
+            else
+            {
+                newPos = headViewF.gameObject.transform.position;
+                newRot = headViewF.gameObject.transform.rotation;
+            }
             mainCamera.gameObject.transform.position = Vector3.Lerp(currentPos, newPos, runTime / TimetoMove);
             mainCamera.gameObject.transform.rotation = Quaternion.Lerp(currentRot, newRot, runTime / TimetoMove);
 
@@ -126,8 +147,17 @@ public class CameraController : MonoBehaviour
             currentPos = mainCamera.gameObject.transform.position;
             currentRot = mainCamera.gameObject.transform.rotation;
 
-            newPos = faceView.gameObject.transform.position;
-            newRot = faceView.gameObject.transform.rotation;
+            if(genderMale)
+            {
+                newPos = faceView.gameObject.transform.position;
+                newRot = faceView.gameObject.transform.rotation;
+            }
+            else
+            {
+                newPos = faceViewF.gameObject.transform.position;
+                newRot = faceViewF.gameObject.transform.rotation;
+            }
+
 
             mainCamera.gameObject.transform.position = Vector3.Lerp(currentPos, newPos, runTime / TimetoMove);
             mainCamera.gameObject.transform.rotation = Quaternion.Lerp(currentRot, newRot, runTime / TimetoMove);
@@ -145,8 +175,16 @@ public class CameraController : MonoBehaviour
             currentPos = mainCamera.gameObject.transform.position;
             currentRot = mainCamera.gameObject.transform.rotation;
 
-            newPos = upperBodyView.gameObject.transform.position;
-            newRot = upperBodyView.gameObject.transform.rotation;
+            if(genderMale)
+            {
+                newPos = upperBodyView.gameObject.transform.position;
+                newRot = upperBodyView.gameObject.transform.rotation;
+            }
+            else
+            {
+                newPos = upperBodyViewF.gameObject.transform.position;
+                newRot = upperBodyViewF.gameObject.transform.rotation;
+            }
 
             mainCamera.gameObject.transform.position = Vector3.Lerp(currentPos, newPos, runTime / TimetoMove);
             mainCamera.gameObject.transform.rotation = Quaternion.Lerp(currentRot, newRot, runTime / TimetoMove);
@@ -164,8 +202,16 @@ public class CameraController : MonoBehaviour
             currentPos = mainCamera.gameObject.transform.position;
             currentRot = mainCamera.gameObject.transform.rotation;
 
-            newPos = lowerBodyView.gameObject.transform.position;
-            newRot = lowerBodyView.gameObject.transform.rotation;
+            if(genderMale)
+            {
+                newPos = lowerBodyView.gameObject.transform.position;
+                newRot = lowerBodyView.gameObject.transform.rotation;
+            }
+            else
+            {
+                newPos = lowerBodyView.gameObject.transform.position;
+                newRot = lowerBodyView.gameObject.transform.rotation;
+            }
 
             mainCamera.gameObject.transform.position = Vector3.Lerp(currentPos, newPos, runTime / TimetoMove);
             mainCamera.gameObject.transform.rotation = Quaternion.Lerp(currentRot, newRot, runTime / TimetoMove);
