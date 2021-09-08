@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UMA;
 using UMA.CharacterSystem;
 using UnityEngine.UI;
@@ -10,8 +11,9 @@ public class CharacterCreatorScript : MonoBehaviour
     public DynamicCharacterAvatar dynamicCharacterAvatarScript;
     public CameraController cameraControllerScript;
     public Dictionary<string, DnaSetter> dNAmodule;
-    
-    
+
+    public string CharacterData;
+
     [Header("Male and female Race names")]
 
     public string maleRaceName;
@@ -23,6 +25,8 @@ public class CharacterCreatorScript : MonoBehaviour
     [Header("DNA module related data")]
 
     public List<Slider> DNAModuleSliders;
+    public List<Slider> DNAModuleSlidersTMP;
+
     public List<string> DNAModuleStrings;
 
     public int dNAModuleValue;
@@ -52,8 +56,8 @@ public class CharacterCreatorScript : MonoBehaviour
     public int guiseModuleValue;
     public int guiseSubModuleValue;
 
-    public Text guiseModuleText;
-    public Text guiseSubModuleText;
+    public TMP_Text guiseModuleText;
+    public TMP_Text guiseSubModuleText;
 
     [Space(10)]
 
@@ -61,7 +65,7 @@ public class CharacterCreatorScript : MonoBehaviour
 
     public List<string> ColorModuleStrings;
     public int ColorModuleValue;
-    public Text colorModuleText;
+    public TMP_Text colorModuleText;
     [Space(10)]
 
 
@@ -74,6 +78,8 @@ public class CharacterCreatorScript : MonoBehaviour
 
     #region GenderChanges
 
+
+    // changes the race of the UMA
     public void ChangeGender(bool genderState)
     {
         if (genderState && dynamicCharacterAvatarScript.activeRace.name != maleRaceName)
@@ -113,28 +119,9 @@ public class CharacterCreatorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetChestRecipie();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            ClearChestRecipe();
-        }
+       
     }
 
-    public void SetChestRecipie()
-    {
-        dynamicCharacterAvatarScript.SetSlot("Chest", "MaleHoodie_Recipe");
-        dynamicCharacterAvatarScript.BuildCharacter();
-    }
-
-    public void ClearChestRecipe()
-    {
-        dynamicCharacterAvatarScript.ClearSlot("Chest");
-        dynamicCharacterAvatarScript.BuildCharacter();
-    }
 
 
     #region DNAModule
@@ -159,7 +146,14 @@ public class CharacterCreatorScript : MonoBehaviour
         }
         else
         {
-            dNAmodule[DNAModuleStrings[valueDNA]].Set(DNAModuleSliders[valueDNA].value);
+            //use if using normal text
+            //dNAmodule[DNAModuleStrings[valueDNA]].Set(DNAModuleSliders[valueDNA].value);
+
+            ///use if using TMP
+            dNAmodule[DNAModuleStrings[valueDNA]].Set(DNAModuleSlidersTMP[valueDNA].value);
+
+
+
             dynamicCharacterAvatarScript.BuildCharacter();
         }
     }
@@ -169,6 +163,8 @@ public class CharacterCreatorScript : MonoBehaviour
 
 
     #region Colors Module
+
+    //Deals with color module navigation
 
     public void ColorItemIncrement()
     {
@@ -231,7 +227,7 @@ public class CharacterCreatorScript : MonoBehaviour
         }
     }
 
-
+    //Deals with updating of colors to respective items
 
     public void ColorModuleAdjustments(Color col)
     {
@@ -244,7 +240,7 @@ public class CharacterCreatorScript : MonoBehaviour
 
     #region GuiseModule
     
-
+//Deals with guise UI navigation
     private void UpdateguiseModuleMale()
     {
         guiseSubModuleText.text = "None";
@@ -340,6 +336,8 @@ public class CharacterCreatorScript : MonoBehaviour
     }
 
     #region Male Guise SubModules
+
+    //updates slots with respective recipies
     public void UpdateHairModuleMale()
     {
         if(guiseSubModuleValue == 0)
@@ -451,9 +449,13 @@ public class CharacterCreatorScript : MonoBehaviour
         guiseSubModuleText.text = feetModuleMale[guiseSubModuleValue];
        
     }
+
+    //replicate the funtion if you need to add your own slot here
     #endregion
 
     #region Female Guise SubModules
+
+        // deals with female UMA race as you add race you need to replicate this modules accordingly.
     public void UpdateHairModuleFemale()
     {
         if (guiseSubModuleValue == 0)
@@ -522,8 +524,7 @@ public class CharacterCreatorScript : MonoBehaviour
     {
         if (guiseSubModuleValue == 0)
         {
-            dynamicCharacterAvatarScript.ClearSlot(GuiseModuleStringsFemale[guiseModuleValue]);
-            dynamicCharacterAvatarScript.BuildCharacter();
+            
         }
         else
         {
@@ -536,6 +537,7 @@ public class CharacterCreatorScript : MonoBehaviour
     #endregion
     public void GuiseSubModuleIncrement()
     {
+        //deals with selection of recipes and implements the recipe to the character creator
         if(genderMale)
         {
             switch (guiseModuleValue)
@@ -650,6 +652,8 @@ public class CharacterCreatorScript : MonoBehaviour
                     }
 
                     break;
+
+                    //Add a new case after adding the slot name to the guisemodulelist to get the slot functional as earlier recipes replicate this step wherver necessary
             }
         }
         else
@@ -923,7 +927,7 @@ public class CharacterCreatorScript : MonoBehaviour
 
                     else
                     {
-                        guiseSubModuleValue = chestModuleFemale.Count - 1;
+                        guiseSubModuleValue = UnderwearModuleFemale.Count - 1;
                         UpdateUnderwearModuleFemale();
                     }
                     break;
@@ -935,6 +939,20 @@ public class CharacterCreatorScript : MonoBehaviour
 
     }
 
+
+    #endregion
+
+    #region Save/Load
+
+    public void SaveCharacter()
+    {
+        CharacterData = dynamicCharacterAvatarScript.GetCurrentRecipe();
+    }
+
+    public void LoadCharacter()
+    {
+        dynamicCharacterAvatarScript.LoadFromRecipeString(CharacterData);
+    }
 
     #endregion
 }

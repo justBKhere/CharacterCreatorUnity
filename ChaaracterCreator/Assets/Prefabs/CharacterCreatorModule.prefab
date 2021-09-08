@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4217623594572906045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4217623594572906047}
+  - component: {fileID: 4217623594572906044}
+  m_Layer: 0
+  m_Name: CharacterCreatorModule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4217623594572906047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217623594572906045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 161.77414, y: 119.3442, z: 176.75735}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4217623594572906044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217623594572906045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb44f0d036062044af800f4732f78bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamicCharacterAvatarScript: {fileID: 0}
+  cameraControllerScript: {fileID: 0}
+  maleRaceName: HumanMaleDCS
+  femaleRaceName: HumanFemaleDCS
+  genderMale: 1
+  DNAModuleSliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  DNAModuleStrings:
+  - height
+  - legSeparation
+  - headSize
+  - headWidth
+  - neckThickness
+  - chinSize
+  - chinPronounced
+  - chinPosition
+  - mandibleSize
+  - jawsSize
+  - jawsPosition
+  - cheekSize
+  - cheekPosition
+  - lowCheekPronounced
+  - lowCheekPosition
+  - foreheadSize
+  - foreheadPosition
+  - eyeRotation
+  - eyeSize
+  - eyeSpacing
+  - noseSize
+  - noseCurve
+  - noseWidth
+  - noseInclination
+  - nosePosition
+  - nosePronounced
+  - noseFlatten
+  - lipsSize
+  - mouthSize
+  - earsSize
+  - earsPosition
+  - earsRotation
+  - armLength
+  - forearmLength
+  - armWidth
+  - forearmWidth
+  - handsSize
+  - upperMuscle
+  - belly
+  - waist
+  - breastSize
+  - breastCleavage
+  - upperWeight
+  - gluteusSize
+  - legsSize
+  - lowerMuscle
+  - feetSize
+  - lowerWeight
+  dNAModuleValue: 0
+  GuiseModuleStringsMale:
+  - Hair
+  - Beard
+  - Eyes
+  - Eyebrows
+  - Chest
+  - Legs
+  - Feet
+  hairModuleMale:
+  - None
+  - ShavedHead
+  - MaleShortHair_Recipe
+  - MilCut
+  - MaleHair1
+  - MaleHair2
+  - MaleHair3
+  - MaleHairSlick01_Recipe
+  beardModuleMale:
+  - None
+  - MaleBeard1
+  - MaleBeard2
+  - MaleBeard3
+  eyesModuleMale:
+  - None
+  - MaleEye1
+  - MaleEye2
+  - MaleEye3
+  - MaleEye4
+  - MaleEye5
+  eyeBrowsModuleMale:
+  - None
+  - MaleBrow01
+  - MaleBrow02
+  - MaleBrowHR
+  - MaleBrowHR2
+  chestModuleMale:
+  - None
+  - MaleHoodie_Recipe
+  - MaleRobe
+  - MaleShirt2
+  legsModuleMale:
+  - None
+  - MaleSweatPants_Recipe
+  - MaleJeans
+  - MalePants
+  - MaleShorts1
+  feetModuleMale:
+  - None
+  - TallShoes_Black_Recipe
+  - TallShoes_Recipe
+  - MaleRobe Shoes
+  GuiseModuleStringsFemale:
+  - Hair
+  - Chest
+  - Legs
+  - Feet
+  - Underwear
+  hairModuleFemale:
+  - None
+  - FemaleLongHair_Recipe
+  - FemalePonyTail_Recipe
+  - FemaleHair1
+  - FemaleHair2
+  - FemaleHair3
+  chestModuleFemale:
+  - None
+  - FemaleTankTop_Recipe
+  - FemaleShirt1
+  - FemaleShirt2
+  - FemaleShirt3
+  - FemaleShirt4
+  legsModuleFemale:
+  - None
+  - FemaleSportPants_Recipe
+  - FemalePants1
+  - FemalePants2
+  feetModuleFemale:
+  - None
+  - FemaleTallShoes_Black
+  - FemaleTallShoes_Torquoise
+  - FemaleTallShoes_White
+  UnderwearModuleFemale:
+  - None
+  - FemaleUndies
+  - FemaleUndies2
+  guiseModuleValue: 0
+  guiseSubModuleValue: 0
+  guiseModuleText: {fileID: 0}
+  guiseSubModuleText: {fileID: 0}
+  ColorModuleStrings:
+  - Skin
+  - Hair
+  - Eyes
+  ColorModuleValue: 0
+  colorModuleText: {fileID: 0}
+  chestRecipieNames: []
